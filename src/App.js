@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from '@emotion/react';
+import GlobalStyles from './styles/globalStyles';
+import theme from './styles/theme';
+import StyledButton from './components/common/Button';
+import LoginPage from './components/pages/LoginPage';
+import NavigationBar from './components/pages/NavigationBar';
+import Banner from './components/pages/Banner';
+import LandingPage from './components/pages/LandingPage';
+import Favourites from './components/pages/Favourites';
+import DetailedTrending from './components/pages/DetailedTrending';
+// import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme} >
+      <GlobalStyles />
+      
+        {/* <LandingPage/> */}
+
+          {/* <Favourites /> */}
+
+          <DetailedTrending />
+    </ThemeProvider>
   );
 }
 
