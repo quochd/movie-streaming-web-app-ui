@@ -1,6 +1,8 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import backgroundImage from '../../assets/images/background2.png';
+import { faMugHot } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate} from "react-router-dom";
 
 
 const Container = styled.div`
@@ -19,20 +21,25 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-//   background: rgba(0, 0, 0, 0.6);
   padding: ${({ theme }) => theme.spacing.large};
-//   border-radius: 8px;
   text-align: center;
-//   opacity: 0.8;
 `;
 
-const Title = styled.h1`
-  margin-bottom: ${({ theme }) => theme.spacing.medium};
-  font-family: ${({ theme }) => theme.fonts.heading};
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: ${({ theme }) => theme.spacing.large};
+  color : white;
+`;
+
+const LogoText = styled.h1`
+  margin-left: ${({ theme }) => theme.spacing.small};
+  font-size: 1.5rem;
 `;
 
 const Subtitle = styled.p`
   margin-bottom: ${({ theme }) => theme.spacing.large};
+  color : white;
 `;
 
 const Button = styled.button`
@@ -59,16 +66,26 @@ const Link = styled.a`
 `;
 
 const LoginPage = () => {
-    return (
-        <Container>
-            <FormWrapper>
-                <Title>WATCH</Title>
-                <Subtitle>Enjoy the newest movies</Subtitle>
-                <Button>Log in</Button>
-                <Link href="#">No account? Sign up</Link>
-            </FormWrapper>
-        </Container>
-    );
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sessionStorage.setItem("isLoggedIn", "true");
+    navigate("/");
+};
+
+  return (
+    <Container>
+      <FormWrapper>
+        <Logo>
+          <FontAwesomeIcon icon={faMugHot} />
+          <LogoText>WATCH</LogoText>
+        </Logo>
+        <Subtitle>Enjoy the newest movies</Subtitle>
+        <Button onClick={handleSubmit}>Log in</Button>
+        <Link >No account? Sign up</Link>
+      </FormWrapper>
+    </Container>
+  );
 };
 
 export default LoginPage;

@@ -1,9 +1,7 @@
-/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-// import { FaHome, FaHeart, FaChartLine, FaCalendarAlt, FaUsers, FaComments, FaCog, FaSignInAlt } from 'react-icons/fa';
 import { faMugHot, faHome, faHeart, faChartLine, faCalendarAlt, faUsers, faComments, faCog, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const Nav = styled.nav`
   width: 275px;
@@ -26,7 +24,7 @@ const LogoText = styled.h1`
   font-size: 1.5rem;
 `;
 
-const ContainerNavItem =  styled.div`
+const ContainerNavItem = styled.div`
   width: 144px;
   height: 732px;
 `;
@@ -40,14 +38,27 @@ const NavItem = styled.div`
   &:hover {
     color: ${({ theme }) => theme.colors.primary};
   }
+  &.active {
+    color: ${({ theme }) => theme.colors.primary};
+    font-weight: bold;
+  }
 `;
 
 const NavIcon = styled.div`
   margin-right: ${({ theme }) => theme.spacing.small};
+
 `;
 
-const NavText = styled.span`
+const NavText = styled(Link)`
   font-size: 1rem;
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+  &.active {
+    font-weight: bold;
+  }
 `;
 
 const Divider = styled.div`
@@ -56,6 +67,14 @@ const Divider = styled.div`
 `;
 
 const NavigationBar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem("isLoggedIn");
+    navigate("/login");
+  };
+
   return (
     <Nav>
       <Logo>
@@ -65,19 +84,19 @@ const NavigationBar = () => {
       <ContainerNavItem>
         <NavItem>
           <NavIcon><FontAwesomeIcon icon={faHome} /></NavIcon>
-          <NavText>Home</NavText>
+          <NavText to="/" className={location.pathname === "/" ? "active" : ""}>Home</NavText>
         </NavItem>
         <NavItem>
           <NavIcon><FontAwesomeIcon icon={faHeart} /></NavIcon>
-          <NavText>Favourites</NavText>
+          <NavText to="/favourites" className={location.pathname === "/favourites" ? "active" : ""}>Favourites</NavText>
         </NavItem>
         <NavItem>
           <NavIcon><FontAwesomeIcon icon={faChartLine} /></NavIcon>
-          <NavText>Trending</NavText>
+          <NavText to="/detailed-trending" className={location.pathname === "/detailed-trending" ? "active" : ""}>Trending</NavText>
         </NavItem>
         <NavItem>
           <NavIcon><FontAwesomeIcon icon={faCalendarAlt} /></NavIcon>
-          <NavText>Coming soon</NavText>
+          <NavText className=''>Coming soon</NavText>
         </NavItem>
         <Divider />
         <NavItem>
@@ -95,7 +114,7 @@ const NavigationBar = () => {
         </NavItem>
         <NavItem>
           <NavIcon><FontAwesomeIcon icon={faSignInAlt} /></NavIcon>
-          <NavText>Log in</NavText>
+          <NavText onClick={handleLogOut}>Log out</NavText>
         </NavItem>
       </ContainerNavItem>
     </Nav>
